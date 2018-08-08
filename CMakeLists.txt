@@ -44,9 +44,10 @@ endif()
 
 add_subdirectory( crypto )
 add_subdirectory( ssl )
-if( BUILD_OBJECT_LIBRARY_ONLY)
-  file( COPY openssl/e_os2.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/crypto/openssl )
-else()
+
+file( COPY openssl/e_os2.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/crypto/openssl )
+
+if(NOT BUILD_OBJECT_LIBRARY_ONLY)
   add_subdirectory( apps )
 
   install( FILES openssl/e_os2.h DESTINATION include/openssl )
