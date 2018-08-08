@@ -216,15 +216,17 @@ add_submodule( x509v3 v3_bcons.c v3_bitst.c v3_conf.c v3_extku.c v3_ia5.c v3_lib
 add_submodule( . EXHEADERS crypto.h opensslv.h opensslconf.h ebcdic.h symhacks.h
   ossl_typ.h )
 
+add_definitions(-DOPENSSL_THREADS)
+if( WIN32 AND MINGW AND NOT CYGWIN )
+  add_definitions(-DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
+endif( WIN32 AND MINGW AND NOT CYGWIN )
+
+set( crypto_headers ${EXHEADERS} )
+list( REMOVE_ITEM crypto_headers ./opensslconf.h )
+file( COPY ${crypto_headers} DESTINATION openssl )
+
 if(BUILD_OBJECT_LIBRARY_ONLY)
-  add_definitions(-DOPENSSL_THREADS)
-  if( WIN32 AND MINGW AND NOT CYGWIN )
-    add_definitions(-DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
-  endif( WIN32 AND MINGW AND NOT CYGWIN )
   add_library( crypto OBJECT ${LIBSRC} ${OBJECTS_SRC} )
-  set( crypto_headers ${EXHEADERS} )
-  list( REMOVE_ITEM crypto_headers ./opensslconf.h )
-  file( COPY ${crypto_headers} DESTINATION openssl )
 else()
   add_library( crypto STATIC ${LIBSRC} ${OBJECTS_SRC} )
 
