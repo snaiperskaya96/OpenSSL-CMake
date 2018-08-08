@@ -226,7 +226,7 @@ if(BUILD_OBJECT_LIBRARY_ONLY)
   list( REMOVE_ITEM crypto_headers ./opensslconf.h )
   file( COPY ${crypto_headers} DESTINATION openssl )
 else()
-  add_library( crypto ${LIBSRC} ${OBJECTS_SRC} )
+  add_library( crypto STATIC ${LIBSRC} ${OBJECTS_SRC} )
 
   if( WIN32 AND NOT CYGWIN )
     target_link_libraries( crypto ws2_32 crypt32 )

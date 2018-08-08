@@ -39,7 +39,7 @@ if(BUILD_OBJECT_LIBRARY_ONLY)
   file( COPY ${LIBHDR} DESTINATION openssl )
   add_library( ssl OBJECT ${LIBSRC} ${LIBHDR} )
 else()
-  add_library( ssl ${LIBSRC} )
+  add_library( ssl STATIC ${LIBSRC} )
   target_link_libraries( ssl crypto )
 
   install( FILES ssl.h ssl2.h ssl3.h ssl23.h tls1.h dtls1.h kssl.h

@@ -27,7 +27,7 @@
 project( openssl )
 cmake_minimum_required( VERSION 2.8.3 )
 
-set(BUILD_OBJECT_LIBRARY_ONLY OFF BOOL)
+set(BUILD_OBJECT_LIBRARY_ONLY FALSE)
 
 include_directories ( BEFORE SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/crypto ${CMAKE_CURRENT_BINARY_DIR}/ssl crypto . )
 
@@ -45,11 +45,11 @@ endif()
 add_subdirectory( crypto )
 add_subdirectory( ssl )
 if( BUILD_OBJECT_LIBRARY_ONLY)
-  file( COPY e_os2.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+  file( COPY openssl/e_os2.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/crypto/openssl )
 else()
   add_subdirectory( apps )
 
-  install( FILES e_os2.h DESTINATION include/openssl )
+  install( FILES openssl/e_os2.h DESTINATION include/openssl )
 
   install( FILES tools/c_hash tools/c_info tools/c_issuer tools/c_name tools/c_rehash
       FAQ LICENSE PROBLEMS README README.ASN1 README.ENGINE
